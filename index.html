@@ -262,14 +262,21 @@
     <div class="container">
       <div class="text-center mb-16">
         <p class="font-body text-sm uppercase tracking-[0.2em] text-gold mb-4">Der Name</p>
-        <h2 class="font-heading text-4xl lg:text-5xl font-bold mb-6">Warum IMPULSPACE</h2>
+        <h2 class="font-heading text-4xl lg:text-5xl font-bold mb-6">
+          Warum
+          <span id="name-puzzle">
+            <span class="name-part impuls-part transition-all duration-300">IMPULS</span><!--
+         --><span class="name-part pace-part transition-all duration-300">PACE</span><!--
+         --><span class="name-part space-part transition-all duration-300">SPACE</span>
+          </span>
+        </h2>
         <div class="w-16 h-1 bg-gold mx-auto mb-8"></div>
         <p class="text-gray-400 max-w-xl mx-auto">Drei Konzepte, vereint in einem Namen</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-10">
         <!-- IMPULS -->
-        <div class="text-center group">
+        <div class="text-center group name-card" data-part="impuls">
           <div class="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold/30 transition-colors">
             <span class="font-heading text-3xl font-bold text-gold">I</span>
           </div>
@@ -280,7 +287,7 @@
         </div>
 
         <!-- PACE -->
-        <div class="text-center group">
+        <div class="text-center group name-card" data-part="pace">
           <div class="w-20 h-20 bg-burgundy/30 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-burgundy/40 transition-colors">
             <span class="font-heading text-3xl font-bold text-burgundy-light">P</span>
           </div>
@@ -291,7 +298,7 @@
         </div>
 
         <!-- SPACE -->
-        <div class="text-center group">
+        <div class="text-center group name-card" data-part="space">
           <div class="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold/30 transition-colors">
             <span class="font-heading text-3xl font-bold text-gold">S</span>
           </div>

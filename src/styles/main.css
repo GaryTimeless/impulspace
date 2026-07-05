@@ -47,6 +47,28 @@
   .reveal.revealed {
     @apply opacity-100 translate-y-0;
   }
+
+  /* Name puzzle: highlight word part on card hover */
+  #name-puzzle .impuls-part.active {
+    @apply text-gold scale-110;
+    text-shadow: 0 0 24px rgba(200, 150, 62, 0.4);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  #name-puzzle .pace-part.active {
+    @apply text-burgundy-light scale-110;
+    text-shadow: 0 0 24px rgba(196, 74, 92, 0.4);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  #name-puzzle .space-part.active {
+    @apply text-gold scale-110;
+    text-shadow: 0 0 24px rgba(200, 150, 62, 0.4);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
 }
 
 @layer utilities {
