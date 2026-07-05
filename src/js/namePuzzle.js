@@ -1,24 +1,36 @@
 /**
- * Name puzzle: highlights word parts (IMPULS/PACE/SPACE) in the heading
- * when hovering over the corresponding explanation cards.
+ * Name puzzle: highlights individual letters in "IMPULSPACE" when hovering
+ * over the corresponding explanation cards.
+ *
+ * Letter breakdown:
+ *   I M P U L S P A C E
+ *   [--IMPULS--]        ← positions 1-6
+ *             [--SPACE] ← positions 6-10 (shares the S)
+ *               [PACE]  ← positions 7-10 (PACE inside SPACE)
  */
 export function initNamePuzzle() {
   const cards = document.querySelectorAll('.name-card');
   if (!cards.length) return;
 
   cards.forEach(card => {
-    const part = card.dataset.part;
-    const target = document.querySelector(`.${part}-part`);
-    if (!target) return;
+    const part = card.dataset.part; // 'impuls', 'pace', or 'space'
+    const letters = document.querySelectorAll(`.${part}-letter`);
+    if (!letters.length) return;
 
-    card.addEventListener('mouseenter', () => target.classList.add('active'));
-    card.addEventListener('mouseleave', () => target.classList.remove('active'));
+    function highlight() {
+      letters.forEach(el => el.classList.add('active'));
+    }
+    function unhighlight() {
+      letters.forEach(el => el.classList.remove('active'));
+    }
 
-    // Touch devices: toggle on tap
+    card.addEventListener('mouseenter', highlight);
+    card.addEventListener('mouseleave', unhighlight);
+
+    // Touch devices
     card.addEventListener('touchstart', (e) => {
-      // Remove all active first
-      document.querySelectorAll('.name-part.active').forEach(el => el.classList.remove('active'));
-      target.classList.add('active');
+      document.querySelectorAll('.name-letter.active').forEach(el => el.classList.remove('active'));
+      highlight();
     });
   });
 }
