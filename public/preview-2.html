@@ -708,8 +708,28 @@
       .hero-name-glitch::after { animation: none; display: none; }
     }
   </style>
+
+<style>
+.pv-nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(10,11,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,150,62,0.2);font-family:Inter,-apple-system,sans-serif;}
+.pv-nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:48px;gap:12px;}
+.pv-nav-btn,.pv-nav-home{color:#C8963E;text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all .2s;border:1px solid rgba(200,150,62,0.25);white-space:nowrap;}
+.pv-nav-btn:hover,.pv-nav-home:hover{background:rgba(200,150,62,0.12);border-color:rgba(200,150,62,0.5);}
+.pv-nav-disabled{color:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.08);cursor:default;}
+.pv-nav-info{color:rgba(255,255,255,0.5);font-size:12px;white-space:nowrap;text-align:center;}
+.pv-nav-home{font-family:'Playfair Display',Georgia,serif;font-size:14px;font-weight:600;margin-left:auto;}
+@media(max-width:600px){.pv-nav-inner{gap:6px;}.pv-nav-btn{font-size:11px;padding:4px 10px;}.pv-nav-home{display:none;}}
+</style>
 </head>
 <body>
+<nav class="pv-nav">
+  <div class="pv-nav-inner">
+    <a href="/impulspace/preview-1.html" class="pv-nav-btn">← Zurück</a>
+    <span class="pv-nav-info">Preview 2 / 6</span>
+    <a href="/impulspace/preview-3.html" class="pv-nav-btn">Weiter →</a>
+    <a href="/impulspace/" class="pv-nav-home" title="Zur Hauptseite">IMPULSPACE</a>
+  </div>
+</nav>
+
 
   <!-- ============================================================
        NAVIGATION
