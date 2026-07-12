@@ -156,10 +156,57 @@
   #cp-panel input[type=color]::-webkit-color-swatch-wrapper{padding:0;}
   #cp-panel input[type=color]::-webkit-color-swatch{border-radius:3px;border:none;}
 
+  /* Background control panel */
+  #bg-toggle{position:fixed;bottom:20px;right:70px;z-index:9998;width:40px;height:40px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);color:var(--gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  #bg-toggle:hover{border-color:var(--gold);}
+  #bg-panel{position:fixed;bottom:70px;right:70px;z-index:9997;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:none;flex-direction:column;gap:1rem;min-width:260px;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+  #bg-panel.open{display:flex;}
+  #bg-panel .bg-row{display:flex;flex-direction:column;gap:.3rem;}
+  #bg-panel label{font-family:var(--font-mono);font-size:.62rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between;}
+  #bg-panel label span.val{color:var(--gold);font-size:.6rem;}
+  #bg-panel input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,.1);outline:none;margin-top:2px;}
+  #bg-panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;}
+  #bg-panel .bg-reset{font-family:var(--font-mono);font-size:.6rem;color:var(--text-muted);background:none;border:1px solid var(--border);padding:.35rem .75rem;border-radius:4px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;align-self:flex-end;}
+  #bg-panel .bg-reset:hover{color:var(--gold);border-color:var(--gold);}
+
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+
+<!-- Background Controls -->
+<button id="bg-toggle" title="Hintergrund anpassen">⚙</button>
+<div id="bg-panel">
+  <div class="bg-row">
+    <label>Partikel <span class="val" id="bv-pcount">50</span></label>
+    <input type="range" id="bg-particle-count" min="0" max="150" value="50" step="1">
+  </div>
+  <div class="bg-row">
+    <label>Partikel Geschw. <span class="val" id="bv-pspeed">1.0</span></label>
+    <input type="range" id="bg-particle-speed" min="0.1" max="3" value="1" step="0.1">
+  </div>
+  <div class="bg-row">
+    <label>Partikel Helligkeit <span class="val" id="bv-pbright">1.0</span></label>
+    <input type="range" id="bg-particle-bright" min="0.2" max="2.5" value="1" step="0.1">
+  </div>
+  <div class="bg-row">
+    <label>Ringe <span class="val" id="bv-rcount">5</span></label>
+    <input type="range" id="bg-ring-count" min="0" max="12" value="5" step="1">
+  </div>
+  <div class="bg-row">
+    <label>Ringe Geschw. <span class="val" id="bv-rspeed">1.0</span></label>
+    <input type="range" id="bg-ring-speed" min="0.1" max="3" value="1" step="0.1">
+  </div>
+  <div class="bg-row">
+    <label>Ringe Helligkeit <span class="val" id="bv-rbright">1.0</span></label>
+    <input type="range" id="bg-ring-bright" min="0.2" max="2.5" value="1" step="0.1">
+  </div>
+  <div class="bg-row">
+    <label>Farbbalance <span class="val" id="bv-cbal">Gold/Rot</span></label>
+    <input type="range" id="bg-color-bal" min="0" max="2" value="1" step="0.1">
+  </div>
+  <button class="bg-reset" id="bg-reset">↺ Standard</button>
+</div>
 
 <!-- Color Picker -->
 <button id="cp-toggle" title="Farben anpassen">🎨</button>
@@ -307,6 +354,71 @@
           Zur Vertiefung eines Themenschwerpunkts konzipiere ich mehrteilige Kurse — online oder mit generierten Avataren, ganz nach Bedarf.
         </p>
         <a href="#kontakt" style="color:var(--gold);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;transition:transform .2s;display:inline-block;">Kurs konzipieren →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 003 — REFERENZEN ═══════════ -->
+<section id="referenzen" class="section-pad">
+  <div class="container">
+    <p class="section-label">// 003 — Referenzen</p>
+    <h2 style="font-family:var(--font-heading);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;color:#fff;margin-bottom:1rem;">Bühne &amp; Expertise</h2>
+    <div class="section-rule"></div>
+    <p style="color:var(--text-secondary);max-width:600px;margin-bottom:3rem;line-height:1.7;">
+      Andrea hat auf nationalen und internationalen Konferenzen gesprochen — von Deep Fakes über Threat Intelligence bis zu Cybersecurity im M&amp;A-Kontext.
+    </p>
+
+    <div style="display:flex;flex-direction:column;gap:1.25rem;">
+      <!-- Ref 1 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Distributed Denial of Truth</h3>
+        <p style="color:var(--text-secondary);font-size:.85rem;line-height:1.6;margin-bottom:.35rem;">The manipulation of our society through deep fake</p>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>Risk &amp; Reg Summerbeats</span><span>2025</span><span>Berlin</span>
+        </div>
+      </div>
+
+      <!-- Ref 2 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Unmasking the Shadows</h3>
+        <p style="color:var(--text-secondary);font-size:.85rem;line-height:1.6;margin-bottom:.35rem;">A Deep Dive into Threat Intelligence and Cyber Adversaries</p>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>Cyberevolution 2024</span><span>2024</span><span>Frankfurt am Main</span>
+        </div>
+      </div>
+
+      <!-- Ref 3 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Cybersecurity in Dealmaking</h3>
+        <p style="color:var(--text-secondary);font-size:.85rem;line-height:1.6;margin-bottom:.35rem;">So sind sie Hackern stets einen Schritt voraus</p>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>Deutsche Investorenkonferenz</span><span>2024</span><span>Frankfurt am Main</span>
+        </div>
+      </div>
+
+      <!-- Ref 4 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Cybersecurity in Project Management</h3>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>2025</span><span>Online</span>
+        </div>
+      </div>
+
+      <!-- Ref 5 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Cyberrisiken in the Metaverse</h3>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>Immersive Lab Opening</span><span>2024</span><span>Frankfurt am Main</span>
+        </div>
+      </div>
+
+      <!-- Ref 6 -->
+      <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;border-left:3px solid var(--gold);transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderLeftColor='var(--gold-hover)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)';" onmouseleave="this.style.borderLeftColor='';this.style.boxShadow='';">
+        <h3 style="font-family:var(--font-heading);font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:.35rem;line-height:1.4;">Cyber risks as the fundament for innovation</h3>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.04em;">
+          <span>LeasingFORUM</span><span>2023</span><span>Bonn</span>
+        </div>
       </div>
     </div>
   </div>
@@ -526,6 +638,14 @@ document.querySelectorAll('.frag').forEach(f=>{
   }
 });
 
+/* ============ BACKGROUND CONFIG ============ */
+const bgConfig={
+  particleCount:50, particleSpeed:1.0, particleBrightness:1.0,
+  ringCount:5, ringSpeed:1.0, ringBrightness:1.0,
+  colorBalance:1.0, alertCount:3
+};
+const bgDefaults={...bgConfig};
+
 /* ============ BACKGROUND: CRIMSON & GOLD ============ */
 const canvas=document.getElementById('c');const ctx=canvas.getContext('2d');
 let w,h,mx=-500,my=-500,tmx=-500,tmy=-500;
@@ -534,34 +654,40 @@ addEventListener('resize',resize);resize();
 addEventListener('mousemove',e=>{tmx=e.clientX;tmy=e.clientY;});
 const GOLD={r:200,g:150,b:62},CRIMSON={r:139,g:26,b:26},EMBER={r:220,g:80,b:30},ASH={r:60,g:30,b:25};
 
-const rings=[];const RING_COUNT=5;
+const rings=[];
 class SecurityRing{
   constructor(index){this.cx=w*0.5;this.cy=h*0.5;this.baseRadius=60+index*100;this.index=index;
     this.rotation=Math.random()*Math.PI*2;this.rotSpeed=(0.0001+Math.random()*0.0002)*(index%2===0?1:-1);
     this.segments=3+Math.floor(Math.random()*4);this.segmentGaps=Array.from({length:this.segments},()=>Math.random()*0.5+0.1);
     this.wobbleAmp=4+Math.random()*12;this.wobbleFreq=0.001+Math.random()*0.002;this.wobblePhase=Math.random()*Math.PI*2;}
   draw(now){this.cx+=(w*0.5+(mx-w*0.5)*0.02*this.index-this.cx)*0.01;this.cy+=(h*0.5+(my-h*0.5)*0.02*this.index-this.cy)*0.01;
-    const alpha=0.04+this.index*0.015;const segAngle=(Math.PI*2)/this.segments;
+    const alpha=Math.min((0.04+this.index*0.015)*bgConfig.ringBrightness,0.25);const segAngle=(Math.PI*2)/this.segments;
+    const total=Math.max(rings.length-1,1);
     for(let s=0;s<this.segments;s++){const gap=this.segmentGaps[s]*segAngle;const a0=this.rotation+s*segAngle+gap*0.5,a1=a0+segAngle-gap;
-      const m=this.index/(RING_COUNT-1);const r=Math.round(CRIMSON.r+(GOLD.r-CRIMSON.r)*m),g=Math.round(CRIMSON.g+(GOLD.g-CRIMSON.g)*m),b=Math.round(CRIMSON.b+(GOLD.b-CRIMSON.b)*m);
-      const wob=Math.sin(now*this.wobbleFreq+this.wobblePhase+s)*this.wobbleAmp;
-      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha.toFixed(4)})`;ctx.lineWidth=0.4+this.index*0.15;
+      const m=this.index/total;const cb=bgConfig.colorBalance;
+      let r,g,b;
+      if(cb<=1){r=Math.round(CRIMSON.r+(GOLD.r-CRIMSON.r)*m*cb);g=Math.round(CRIMSON.g+(GOLD.g-CRIMSON.g)*m*cb);b=Math.round(CRIMSON.b+(GOLD.b-CRIMSON.b)*m*cb);}
+      else{const e=cb-1;r=Math.round(GOLD.r+(255-GOLD.r)*m*e);g=Math.round(GOLD.g+(255-GOLD.g)*m*e);b=Math.round(GOLD.b+(255-GOLD.b)*m*e);}
+      const wob=Math.sin(now*this.wobbleFreq*bgConfig.ringSpeed+this.wobblePhase+s)*this.wobbleAmp;
+      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha.toFixed(4)})`;ctx.lineWidth=(0.4+this.index*0.15)*Math.min(bgConfig.ringBrightness,2);
       ctx.beginPath();ctx.arc(this.cx,this.cy,this.baseRadius+wob,a0,a1);ctx.stroke();}}
 }
-for(let i=0;i<RING_COUNT;i++)rings.push(new SecurityRing(i));
+function adjustRings(){while(rings.length<bgConfig.ringCount)rings.push(new SecurityRing(rings.length));while(rings.length>bgConfig.ringCount)rings.pop();}
+for(let i=0;i<bgConfig.ringCount;i++)rings.push(new SecurityRing(i));
 
-const embers=[];const EMBER_COUNT=50;
+const embers=[];
 class Ember{constructor(){this.reset(true);}
   reset(init=false){this.x=Math.random()*w;this.y=init?Math.random()*h:h+20;this.size=0.6+Math.random()*1.4;
     this.speedY=0.1+Math.random()*0.4;this.speedX=(Math.random()-0.5)*0.3;this.wobbleAmp=0.3+Math.random()*1;
     this.wobbleSpeed=0.01+Math.random()*0.03;this.wobblePhase=Math.random()*Math.PI*2;this.alpha=0.4+Math.random()*0.3;
     this.pulsePhase=Math.random()*Math.PI*2;this.isGold=Math.random()<0.35;this._c=Math.random()<0.5?EMBER:ASH;}
-  update(now){this.y-=this.speedY;this.x+=this.speedX+Math.sin(now*this.wobbleSpeed+this.wobblePhase)*this.wobbleAmp;
+  update(now){this.y-=this.speedY*bgConfig.particleSpeed;this.x+=this.speedX*bgConfig.particleSpeed+Math.sin(now*this.wobbleSpeed+this.wobblePhase)*this.wobbleAmp;
     if(this.y<-20){this.reset(false);}if(this.x<-20)this.x=w+20;if(this.x>w+20)this.x=-20;
-    this.currentAlpha=this.alpha*(0.65+0.35*Math.sin(now*0.0008+this.pulsePhase));this.color=this.isGold?GOLD:this._c;}}
-for(let i=0;i<EMBER_COUNT;i++)embers.push(new Ember());
+    this.currentAlpha=this.alpha*bgConfig.particleBrightness*(0.65+0.35*Math.sin(now*0.0008+this.pulsePhase));this.color=this.isGold?GOLD:this._c;}}
+function adjustEmbers(){while(embers.length<bgConfig.particleCount)embers.push(new Ember());while(embers.length>bgConfig.particleCount)embers.pop();}
+for(let i=0;i<bgConfig.particleCount;i++)embers.push(new Ember());
 
-const alerts=[];const MAX_ALERTS=3;
+const alerts=[];
 function spawnAlert(){alerts.push({x:Math.random()*w,y:Math.random()*h,radius:0,maxRadius:100+Math.random()*200,life:0,maxLife:2500+Math.random()*3000,startTime:performance.now()});}
 function drawBg(){const grad=ctx.createRadialGradient(w*0.5,h*0.5,0,w*0.5,h*0.5,Math.max(w,h)*0.7);
   grad.addColorStop(0,'#0a0a0a');grad.addColorStop(0.5,'#050505');grad.addColorStop(1,'#000000');ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);}
@@ -569,11 +695,57 @@ function drawEmbers(){for(const e of embers){if(e.currentAlpha<0.005)continue;co
 function drawAlerts(){for(const a of alerts){const p=a.life/a.maxLife;const al=0.06*(1-p)*Math.sin(p*Math.PI);
   ctx.strokeStyle=`rgba(${CRIMSON.r},${CRIMSON.g},${CRIMSON.b},${al.toFixed(4)})`;ctx.lineWidth=0.5;ctx.beginPath();ctx.arc(a.x,a.y,a.radius,0,Math.PI*2);ctx.stroke();
   if(p>0.3){ctx.strokeStyle=`rgba(${GOLD.r},${GOLD.g},${GOLD.b},${(al*0.5).toFixed(4)})`;ctx.beginPath();ctx.arc(a.x,a.y,a.radius*0.7,0,Math.PI*2);ctx.stroke();}}}
-function update(now){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;for(const e of embers)e.update(now);
+function update(now){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;
+  if(embers.length!==bgConfig.particleCount)adjustEmbers();
+  if(rings.length!==bgConfig.ringCount)adjustRings();
+  for(const e of embers)e.update(now);
   for(let i=alerts.length-1;i>=0;i--){const t=now-alerts[i].startTime;alerts[i].life=t;alerts[i].radius=(t/alerts[i].maxLife)*alerts[i].maxRadius;if(t>alerts[i].maxLife)alerts.splice(i,1);}
-  if(alerts.length<MAX_ALERTS&&Math.random()<0.012)spawnAlert();}
+  if(alerts.length<bgConfig.alertCount&&Math.random()<0.012)spawnAlert();}
 function loop(ts){update(ts);drawBg();for(const r of rings)r.draw(ts);drawAlerts();drawEmbers();requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
+
+/* ============ BACKGROUND PANEL CONTROLS ============ */
+(function(){
+  const panel=document.getElementById('bg-panel');
+  const toggle=document.getElementById('bg-toggle');
+  toggle.addEventListener('click',()=>panel.classList.toggle('open'));
+
+  function bind(id,key,valId,fmt){
+    const inp=document.getElementById(id);
+    const valEl=document.getElementById(valId);
+    inp.addEventListener('input',()=>{
+      const v=parseFloat(inp.value);
+      bgConfig[key]=v;
+      if(valEl)valEl.textContent=typeof fmt==='function'?fmt(v):v;
+    });
+  }
+  bind('bg-particle-count','particleCount','bv-pcount',v=>Math.round(v));
+  bind('bg-particle-speed','particleSpeed','bv-pspeed',v=>v.toFixed(1));
+  bind('bg-particle-bright','particleBrightness','bv-pbright',v=>v.toFixed(1));
+  bind('bg-ring-count','ringCount','bv-rcount',v=>Math.round(v));
+  bind('bg-ring-speed','ringSpeed','bv-rspeed',v=>v.toFixed(1));
+  bind('bg-ring-bright','ringBrightness','bv-rbright',v=>v.toFixed(1));
+  bind('bg-color-bal','colorBalance','bv-cbal',v=>v<=0.4?'Nur Rot':v<=0.8?'Mehr Rot':v<=1.2?'Gold/Rot':v<=1.6?'Mehr Gold':'Nur Gold');
+
+  document.getElementById('bg-reset').addEventListener('click',()=>{
+    Object.assign(bgConfig,bgDefaults);
+    document.getElementById('bg-particle-count').value=bgDefaults.particleCount;
+    document.getElementById('bg-particle-speed').value=bgDefaults.particleSpeed;
+    document.getElementById('bg-particle-bright').value=bgDefaults.particleBrightness;
+    document.getElementById('bg-ring-count').value=bgDefaults.ringCount;
+    document.getElementById('bg-ring-speed').value=bgDefaults.ringSpeed;
+    document.getElementById('bg-ring-bright').value=bgDefaults.ringBrightness;
+    document.getElementById('bg-color-bal').value=bgDefaults.colorBalance;
+    document.getElementById('bv-pcount').textContent=bgDefaults.particleCount;
+    document.getElementById('bv-pspeed').textContent=bgDefaults.particleSpeed.toFixed(1);
+    document.getElementById('bv-pbright').textContent=bgDefaults.particleBrightness.toFixed(1);
+    document.getElementById('bv-rcount').textContent=bgDefaults.ringCount;
+    document.getElementById('bv-rspeed').textContent=bgDefaults.ringSpeed.toFixed(1);
+    document.getElementById('bv-rbright').textContent=bgDefaults.ringBrightness.toFixed(1);
+    document.getElementById('bv-cbal').textContent='Gold/Rot';
+    adjustEmbers();adjustRings();
+  });
+})();
 
 /* ============ COLOR PICKER ============ */
 (function(){
