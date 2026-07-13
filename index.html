@@ -211,6 +211,16 @@
   .warum-grid{display:grid;gap:2.5rem;grid-template-columns:repeat(3,1fr);}
   @media(max-width:900px){.portfolio-grid,.warum-grid{grid-template-columns:1fr;}}
 
+  /* PACE fly-in animation */
+  .nl-pace{opacity:0;transform:translateX(60px);}
+  .nl-pace.fly{animation:paceFlyIn .55s cubic-bezier(.16,1,.3,1) forwards,pacePulse 1.1s ease-out forwards;}
+  @keyframes paceFlyIn{to{opacity:1;transform:translateX(0);}}
+  @keyframes pacePulse{
+    0%{color:#fff;text-shadow:0 0 0 rgba(196,80,96,0);}
+    25%{color:#c45060;text-shadow:0 0 36px rgba(196,80,96,1),0 0 70px rgba(196,80,96,.6);font-weight:800;}
+    100%{color:#fff;text-shadow:0 0 0 rgba(196,80,96,0);font-weight:400;}
+  }
+
 </style>
 </head>
 <body>
@@ -476,7 +486,7 @@
      --><span class="nl nl-pace nl-space">A</span><!--
      --><span class="nl nl-pace nl-space">C</span><!--
      --><span class="nl nl-pace nl-space">E</span>
-      </span>
+      </span><span class="nl nl-pace nl-space">?</span>
     </h2>
     <p style="color:var(--text-muted);max-width:500px;margin-bottom:1.5rem;">Drei Konzepte, vereint in einem Namen</p>
     <div class="section-rule"></div>
@@ -934,6 +944,34 @@ document.querySelectorAll('.name-card').forEach(card => {
     letters.forEach(l => l.classList.add('active'));
   });
 });
+
+/* ============ PACE FLY-IN ============ */
+(function(){
+  const paceLetters = document.querySelectorAll('.nl-pace');
+  const warumSection = document.getElementById('warum');
+  let fired = false;
+  if (!paceLetters.length || !warumSection) return;
+
+  function trigger(){
+    if (fired) return; fired = true;
+    paceLetters.forEach((l,i) => {
+      // Staggered: fly-in delay, then pulse delay
+      l.style.animationDelay = `${i * 0.07}s, ${0.5 + i * 0.14}s`;
+      setTimeout(() => l.classList.add('fly'), 80 + i * 70);
+    });
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { trigger(); obs.disconnect(); }
+  }, { threshold: 0.3 });
+  obs.observe(warumSection);
+
+  // Fallback: trigger if already visible
+  setTimeout(() => {
+    const rect = warumSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) trigger();
+  }, 1200);
+})();
 </script>
 </body>
 </html>
