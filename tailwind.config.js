@@ -23,7 +23,7 @@ export default {
       },
       fontFamily: {
         heading: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        body: ['Syne', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
       container: {
         center: true,
