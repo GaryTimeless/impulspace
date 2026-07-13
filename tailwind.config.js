@@ -22,7 +22,7 @@ export default {
         'text-secondary': '#6B7280',
       },
       fontFamily: {
-        heading: ['"Playfair Display"', 'Georgia', 'serif'],
+        heading: ['"Syne"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         body: ['Syne', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
       container: {
