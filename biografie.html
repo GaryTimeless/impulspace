@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Über mich — Andrea Hornung | IMPULSPACE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#000000; --bg-card:#0a0a0a; --bg-elevated:#111111;
+    --gold:#C8963E; --gold-hover:#D4A854; --gold-glow:rgba(200,150,62,.3); --gold-subtle:rgba(200,150,62,.08);
+    --pace:#c45060; --pace-subtle:rgba(196,80,96,.08);
+    --text-primary:#e8e8ed; --text-secondary:#8aa89b; --text-muted:#5a6070;
+    --border:rgba(255,255,255,.07); --border-active:rgba(200,150,62,.3);
+    --radius:8px;
+    --font-heading:'Syne',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-body:'Syne',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'Fira Code','JetBrains Mono','SF Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body);line-height:1.65;overflow-x:hidden;}
+  a{text-decoration:none;}
+  ::-moz-selection{background:var(--pace);color:#fff;}
+  ::selection{background:var(--pace);color:#fff;}
+  :focus-visible{outline:2px solid var(--pace);outline-offset:2px;border-radius:2px;}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+
+  /* Header */
+  .page-header{padding:2rem 0;border-bottom:1px solid var(--border);margin-bottom:4rem;}
+  .page-header .container{display:flex;align-items:center;justify-content:space-between;}
+  .page-logo{font-family:var(--font-heading);font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-.02em;}
+  .page-logo span{color:var(--gold);}
+  .back-link{font-family:var(--font-body);font-size:.8rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.05em;transition:color .2s;display:flex;align-items:center;gap:.4rem;}
+  .back-link:hover{color:var(--gold-hover);}
+
+  /* Content */
+  .bio-content{max-width:720px;color:var(--text-secondary);line-height:1.85;font-size:.95rem;}
+  .bio-content p{margin-bottom:1.25rem;}
+  .bio-content strong{color:var(--text-primary);}
+  .bio-content .section-rule{width:60px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:1.5rem 0 2rem;}
+  .bio-content h1{font-family:var(--font-heading);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;color:#fff;margin-bottom:0.25rem;}
+  .bio-content .sub{color:var(--text-secondary);margin-bottom:1.5rem;line-height:1.7;}
+
+  /* Footer */
+  .page-footer{padding:3rem 0;margin-top:5rem;border-top:1px solid var(--border);text-align:center;font-size:.75rem;color:var(--text-muted);}
+  .page-footer a{color:var(--text-muted);transition:color .2s;}
+  .page-footer a:hover{color:var(--gold);}
+
+  @media(max-width:700px){
+    .page-header{margin-bottom:2rem;}
+    .bio-content{font-size:.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="container">
+    <a href="index.html" class="page-logo"><span>IMPUL</span>SPACE</a>
+    <a href="index.html" class="back-link">← Zurück zur Hauptseite</a>
+  </div>
+</header>
+
+<main class="container">
+  <div class="bio-content">
+    <h1>Über mich</h1>
+    <p class="sub">Mein Weg von der Informationswissenschaft zur Cybersicherheit.</p>
+    <div class="section-rule"></div>
+
+    <p>Andrea Hornung verbindet <strong>tiefgreifende Expertise in Cybersicherheit</strong> mit einer Leidenschaft für Wissensvermittlung.</p>
+
+    <p>Ihre akademischen Wurzeln liegen in der Informationswissenschaft und im Innovationsmanagement. Früh sammelte sie praktische Erfahrung in der Zukunftsforschung und digitalen Transformation. Als zertifizierte Trainerin hielt sie bereits parallel zum Studium Seminare zu methodischen und sozialen Kompetenzen.</p>
+
+    <p>Eine prägende Station führte sie ins Innovationszentrum eines Softwareunternehmens nach <strong>Australien</strong>, wo sie in einem interkulturellen Team von Data Scientists an Machine-Learning-Lösungen arbeitete.</p>
+
+    <p>Nachdem Andrea in Manila Opfer eines raffinierten <strong>Cyberangriffs</strong> wurde, entschloss sie sich, gegen die wachsende Cyberkriminalität vorzugehen und begann in einem globalen Beratungsunternehmen im Bereich Cyber Risk Advisory. Dort gestaltete sie Cyber-Awareness-Kampagnen in enger Zusammenarbeit mit CISOs und führte Risikoanalysen durch.</p>
+
+    <p>Anschließend arbeitete Andrea über <strong>sieben Jahre bei PwC</strong>, zuletzt als Senior Managerin im Bereich Cybersecurity &amp; Privacy. Nach zahlreichen Projekteinsätzen bei Unternehmen unterschiedlichster Branchen — darunter Start-ups, KMU bis Großkonzerne — spezialisierte sie sich auf <strong>Cybersicherheit in M&amp;A-Transaktionen</strong>. Dabei identifizierte sie Cyberrisiken entlang des gesamten Deal Lifecycle, leitete aus Risikobewertungen Sicherheitsmaßnahmen, potenzielle Deal Breaker sowie Investitionskosten ab und half, den Transaktionswert für ihre Kunden nachhaltig zu schützen.</p>
+
+    <p>Darüber hinaus engagiert sich Andrea seit vielen Jahren im <strong>Innovationsökosystem für Cyber-Start-ups</strong>; sie unterstützt Gründer:innen und Investor:innen u.a. als Mentorin und Jurorin.</p>
+
+    <p>Als Innovationsmanagerin für Cybersicherheit &amp; Digitale Resilienz beim <strong>SIBB e.V.</strong>, dem Verband der Software-, Informations- und Kommunikations-Industrie in Berlin und Brandenburg, entwickelt Andrea Unterstützungsangebote und Innovationsformate für eine sichere Digitalisierung von KMU. Dabei agiert sie an der Schnittstelle von Unternehmen, Expert:innen, Partnerorganisationen und dem regionalen Innovationsökosystem.</p>
+
+    <p>Mit der Mission, <strong>Menschen und Organisationen zu befähigen, Cyberrisiken zu erkennen</strong>, und sie mit dem Wissen und den Skills auszustatten, um sicher und souverän in der dynamischen digitalen Welt zu agieren, gründete Andrea IMPULSPACE. Mit großer Begeisterung hält sie Impulsvorträge sowie Seminare und konzipiert Lerninhalte für Weiterbildungsinstitute.</p>
+  </div>
+</main>
+
+<footer class="page-footer">
+  <div class="container">
+    <p>&copy; 2026 IMPULSPACE — Andrea Hornung &nbsp;|&nbsp; <a href="index.html">Zurück zur Hauptseite</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
