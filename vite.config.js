@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/impulspace/' : '/',
@@ -10,5 +11,11 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        biografie: resolve(__dirname, 'biografie.html'),
+      },
+    },
   },
 }));
