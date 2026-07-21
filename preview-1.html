@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMPULSPACE — Showcase // Cyber-Design-Konzepte</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM — Darknet Cyber Vibe
+       Colors: Schwarz (#08080c), Gold (#C8963E), Cyber-Cyan (#06d6f5)
+       ============================================================ */
+
+    :root {
+      --bg-deep:        #08080c;
+      --bg-card:        #0f1119;
+      --bg-terminal:    #0a0f18;
+      --gold:           #C8963E;
+      --gold-glow:      rgba(200, 150, 62, 0.4);
+      --gold-dim:       rgba(200, 150, 62, 0.12);
+      --cyan:           #06d6f5;
+      --cyan-glow:      rgba(6, 214, 245, 0.35);
+      --cyan-dim:       rgba(6, 214, 245, 0.08);
+      --terminal-green: #6a8;
+      --terminal-amber: #d4a040;
+      --terminal-red:   #f85149;
+      --text-primary:   #e8e8ed;
+      --text-secondary: #8899aa;
+      --text-muted:     #5a6a7a;
+      --border-subtle:  rgba(255,255,255,0.06);
+      --border-card:    rgba(255,255,255,0.08);
+      --font-heading:   'Playfair Display', Georgia, serif;
+      --font-body:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:      'Fira Code', 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: var(--font-heading); }
+
+    /* ---------- Utility Classes ---------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-pad { padding: 6rem 0; }
+
+    .gold-text  { color: var(--gold); }
+    .cyan-text  { color: var(--cyan); }
+    .gold-glow  { text-shadow: 0 0 30px var(--gold-glow); }
+    .cyan-glow  { text-shadow: 0 0 20px var(--cyan-glow); }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 1.5rem 0 2rem;
+    }
+
+    .btn-cyber {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid rgba(200, 150, 62, 0.35);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .btn-cyber:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      box-shadow: 0 0 24px var(--gold-glow);
+      color: #fff;
+    }
+    .btn-cyber.cyan {
+      color: var(--cyan);
+      border-color: rgba(6, 214, 245, 0.35);
+    }
+    .btn-cyber.cyan:hover {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      box-shadow: 0 0 24px var(--cyan-glow);
+      color: #fff;
+    }
+
+    /* ============================================================
+       IDEA 1: FAKE LOGIN OVERLAY (startet sichtbar)
+       ============================================================ */
+    #access-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #060a10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      transition: clip-path 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+    }
+
+    #access-gate.exit-anim {
+      clip-path: circle(0% at 50% 50%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gate-scanlines {
+      position: fixed; inset: 0; z-index: 100000; pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px,
+        transparent 1px, transparent 3px
+      );
+    }
+
+    .gate-noise {
+      position: fixed; inset: 0; z-index: 100001; pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .gate-container {
+      position: relative; z-index: 100002;
+      text-align: center;
+      max-width: 440px;
+      width: 90%;
+    }
+
+    .gate-emblem {
+      width: 64px; height: 64px;
+      margin: 0 auto 2rem;
+      border: 1px solid var(--terminal-green);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.7;
+    }
+    .gate-emblem svg { width: 30px; height: 30px; stroke: var(--terminal-green); }
+
+    .gate-system-line {
+      font-size: 0.6rem;
+      color: #4a7a5a;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.25rem;
+    }
+    .gate-system-line.main {
+      font-size: 0.7rem;
+      color: var(--terminal-green);
+      margin-bottom: 2rem;
+    }
+
+    .gate-status {
+      font-size: 0.7rem;
+      color: var(--terminal-amber);
+      margin-bottom: 1.5rem;
+      min-height: 1.2em;
+      transition: color 0.3s;
+    }
+
+    .gate-label {
+      display: block;
+      font-size: 0.6rem;
+      color: #4a7a5a;
+      letter-spacing: 0.2em;
+      text-align: left;
+      margin: 0.8rem 0 0.25rem;
+    }
+
+    .gate-input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      background: rgba(0, 25, 15, 0.5);
+      border: 1px solid #2a5a3a;
+      color: var(--terminal-green);
+      font: inherit;
+      font-size: 0.9rem;
+      caret-color: var(--terminal-green);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .gate-input:focus {
+      border-color: var(--terminal-green);
+      box-shadow: 0 0 14px rgba(0,255,100,0.12), inset 0 0 14px rgba(0,255,100,0.04);
+    }
+
+    .gate-btn {
+      margin-top: 1.5rem;
+      padding: 0.6rem 2rem;
+      background: transparent;
+      border: 1px solid #2a5a3a;
+      color: var(--terminal-green);
+      font: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .gate-btn:hover {
+      background: rgba(0,255,100,0.06);
+      box-shadow: 0 0 20px rgba(0,255,100,0.2);
+      border-color: var(--terminal-green);
+    }
+
+    .gate-attempts {
+      font-size: 0.6rem;
+      color: #4a7a5a;
+      margin-top: 0.8rem;
+      letter-spacing: 0.15em;
+      transition: color 0.3s;
+    }
+
+    .gate-bypass {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 100003;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.12);
+      font: inherit;
+      font-size: 0.5rem;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+    .gate-bypass:hover { color: rgba(255,255,255,0.35); }
+
+    .gate-reveal-text {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+
+    @keyframes gate-shake {
+      0%, 100% { transform: translateX(0); }
+      20%      { transform: translateX(-5px); }
+      40%      { transform: translateX(5px); }
+      60%      { transform: translateX(-3px); }
+      80%      { transform: translateX(3px); }
+    }
+    .gate-shake { animation: gate-shake 0.4s ease-in-out; }
+
+    /* ============================================================
+       IDEA 2: THREAT LEVEL BANNER
+       ============================================================ */
+    #threat-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9998;
+      background: rgba(200, 50, 50, 0.08);
+      border-bottom: 1px solid rgba(200, 50, 50, 0.15);
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #d44;
+      padding: 6px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(8px);
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #threat-banner.visible { transform: translateY(0); }
+
+    .threat-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f44;
+      animation: threat-pulse 2s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    @keyframes threat-pulse {
+      0%, 100% { box-shadow: 0 0 4px #f44; }
+      50%      { box-shadow: 0 0 12px #f44, 0 0 20px rgba(255,50,50,0.3); }
+    }
+
+    /* ============================================================
+       IDEA 3: TERMINAL INTRO HERO
+       ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg-deep);
+      position: relative;
+      overflow: hidden;
+      padding-top: 0;
+    }
+
+    /* Subtle grid background */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    }
+
+    #hero .container { position: relative; z-index: 2; }
+
+    .terminal-window {
+      max-width: 720px;
+      width: 100%;
+      background: var(--bg-terminal);
+      border: 1px solid rgba(6, 214, 245, 0.12);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow:
+        0 0 60px rgba(6, 214, 245, 0.06),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      height: 38px;
+      padding: 0 16px;
+      background: #060c14;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .terminal-dots { display: flex; gap: 8px; }
+    .terminal-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+    .terminal-dot.red    { background: #ff5f57; }
+    .terminal-dot.yellow { background: #febc2e; }
+    .terminal-dot.green  { background: #28c840; }
+
+    .terminal-title {
+      margin-left: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-body {
+      padding: 28px 28px 32px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.75;
+      min-height: 380px;
+    }
+
+    .term-prompt  { color: var(--cyan); }
+    .term-cmd     { color: var(--terminal-amber); }
+    .term-out     { color: var(--text-secondary); }
+    .term-success { color: #57d364; }
+    .term-highlight { color: var(--gold); }
+
+    .term-cursor {
+      display: inline-block;
+      width: 0.55em;
+      height: 1.15em;
+      background: var(--cyan);
+      vertical-align: text-bottom;
+      animation: cursor-blink 1s steps(1, end) infinite;
+    }
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    .term-line { display: none; }
+    .term-line.visible { display: block; }
+
+    /* Terminal hero CTA under the window */
+    .hero-cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ============================================================
+       IDEA 4: GLITCH HEADINGS
+       ============================================================ */
+    .glitch-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-heading::before,
+    .glitch-heading::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--bg-deep);
+      opacity: 0;
+    }
+
+    .glitch-heading.glitch-active::before {
+      opacity: 1;
+      left: 2px;
+      text-shadow: -1px 0 rgba(6, 214, 245, 0.4);
+      animation: glitch-before 3s infinite steps(2);
+    }
+    .glitch-heading.glitch-active::after {
+      opacity: 1;
+      left: -2px;
+      text-shadow: 1px 0 rgba(200, 150, 62, 0.4);
+      animation: glitch-after 2.7s infinite steps(2);
+    }
+
+    @keyframes glitch-before {
+      0%   { clip-path: inset(80% 0 0% 0); }
+      5%   { clip-path: inset(15% 0 65% 0); }
+      10%  { clip-path: inset(80% 0 0% 0); }
+      55%  { clip-path: inset(80% 0 0% 0); }
+      60%  { clip-path: inset(72% 0 8% 0); }
+      65%  { clip-path: inset(80% 0 0% 0); }
+      100% { clip-path: inset(80% 0 0% 0); }
+    }
+    @keyframes glitch-after {
+      0%   { clip-path: inset(80% 0 0% 0); }
+      15%  { clip-path: inset(45% 0 35% 0); }
+      20%  { clip-path: inset(80% 0 0% 0); }
+      80%  { clip-path: inset(80% 0 0% 0); }
+      85%  { clip-path: inset(8% 0 75% 0); }
+      90%  { clip-path: inset(80% 0 0% 0); }
+      100% { clip-path: inset(80% 0 0% 0); }
+    }
+
+    /* ---------- Glitch Button ---------- */
+    .glitch-btn {
+      position: relative;
+    }
+    .glitch-btn::before,
+    .glitch-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .glitch-btn::before { background: rgba(6, 214, 245, 0.1); }
+    .glitch-btn::after  { background: rgba(200, 150, 62, 0.1); }
+    .glitch-btn:hover::before {
+      opacity: 1;
+      animation: btn-glitch-1 0.2s steps(2) infinite;
+    }
+    .glitch-btn:hover::after {
+      opacity: 1;
+      animation: btn-glitch-2 0.2s steps(2) infinite reverse;
+    }
+    @keyframes btn-glitch-1 {
+      0%   { transform: translate(2px, 0); }
+      33%  { transform: translate(-2px, -1px); }
+      66%  { transform: translate(1px, 1px); }
+      100% { transform: translate(-1px, 0); }
+    }
+    @keyframes btn-glitch-2 {
+      0%   { transform: translate(-2px, 0); }
+      33%  { transform: translate(2px, 1px); }
+      66%  { transform: translate(-1px, -1px); }
+      100% { transform: translate(1px, 0); }
+    }
+
+    /* ============================================================
+       IDEA 5: ENCRYPTED / REDACTED SECTION
+       ============================================================ */
+    .classified-section {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      overflow: hidden;
+    }
+
+    .classified-stamp {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: var(--font-mono);
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      color: var(--terminal-red);
+      opacity: 0.04;
+      pointer-events: none;
+      transition: opacity 1s ease-out;
+    }
+    .classified-stamp.faded { opacity: 0; }
+
+    .redacted-line {
+      position: relative;
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .redact-bar {
+      position: absolute; inset: 0;
+      background: #000;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+    }
+    .redact-bar::after {
+      content: '[REDACTED]';
+      position: absolute; inset: 0;
+      display: flex; align-items: center;
+      font-family: var(--font-mono);
+      font-size: inherit;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.15em;
+    }
+    .redact-bar.revealed {
+      transform: translateX(105%);
+    }
+
+    .scramble-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      min-height: 1.2em;
+    }
+    .scramble-char.char-resolved {
+      color: var(--text-primary);
+      text-shadow: 0 0 8px rgba(6, 214, 245, 0.35);
+    }
+
+    /* Decrypt status indicator */
+    .decrypt-status {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .decrypt-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: threat-pulse 1.5s ease-in-out infinite;
+    }
+    .decrypt-dot.done {
+      background: var(--terminal-green);
+      animation: none;
+    }
+
+    /* ============================================================
+       IDEA 6: LIVE TERMINAL / SECURITY LOG VISUAL
+       ============================================================ */
+    .live-log-window {
+      background: var(--bg-terminal);
+      border: 1px solid rgba(6, 214, 245, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      line-height: 1.8;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .live-log-body {
+      padding: 20px 24px;
+      color: var(--text-secondary);
+    }
+    .log-line {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: log-fade-in 0.25s ease-out forwards;
+    }
+    @keyframes log-fade-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .log-ts     { color: var(--text-muted); margin-right: 8px; }
+    .log-info   { color: var(--cyan); }
+    .log-warn   { color: var(--terminal-amber); }
+    .log-alert  { color: var(--terminal-red); }
+    .log-ok     { color: #57d364; }
+
+    /* ============================================================
+       CARDS / PORTFOLIO
+       ============================================================ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cyber-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 6px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cyber-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0;
+    }
+    .cyber-card:hover {
+      border-color: rgba(6, 214, 245, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px rgba(6, 214, 245, 0.04);
+    }
+    .cyber-card:hover::before { opacity: 1; }
+
+    .cyber-card.gold-border:hover {
+      border-color: rgba(200, 150, 62, 0.25);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px rgba(200, 150, 62, 0.06);
+    }
+    .cyber-card.gold-border::before {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .card-icon {
+      width: 42px; height: 42px;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid;
+      margin-bottom: 1rem;
+    }
+    .card-tag.cyan  { color: var(--cyan); border-color: rgba(6, 214, 245, 0.25); }
+    .card-tag.gold  { color: var(--gold); border-color: rgba(200, 150, 62, 0.25); }
+
+    /* ============================================================
+       IDEA 7: FOOTER EASTER EGG
+       ============================================================ */
+    .site-footer {
+      background: #060810;
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+    .footer-easter-egg {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.08);
+      text-decoration: none;
+      cursor: default;
+      transition: color 0.4s;
+      margin-top: 1rem;
+    }
+    .footer-easter-egg:hover {
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       EASTER EGG MODAL (vom Footer-Link ausgelöst)
+       ============================================================ */
+    .easter-egg-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      font-family: var(--font-mono);
+    }
+    .easter-egg-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .easter-egg-content {
+      text-align: center;
+      padding: 2rem;
+      max-width: 460px;
+    }
+    .easter-egg-content .ee-title {
+      font-size: 1rem;
+      color: var(--terminal-green);
+      margin-bottom: 1rem;
+    }
+    .easter-egg-content .ee-body {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .easter-egg-content .ee-punchline {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       NAVIGATION (nach dem Gate)
+       ============================================================ */
+    #main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9997;
+      padding: 1rem 2rem;
+      background: rgba(8, 8, 12, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #main-nav.visible { transform: translateY(0); }
+    #main-nav .nav-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    #main-nav .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    #main-nav .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    #main-nav .nav-links a:hover { color: var(--cyan); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      .section-pad { padding: 4rem 0; }
+      .classified-section { padding: 2rem 1.25rem; }
+      .terminal-body { padding: 20px 16px 24px; font-size: 0.72rem; }
+      .classified-stamp { font-size: 3rem; letter-spacing: 0.2em; }
+      .card-grid { grid-template-columns: 1fr; }
+      #main-nav .nav-links { gap: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glitch-heading::before,
+      .glitch-heading::after { animation: none; display: none; }
+      .scramble-char.char-resolved { text-shadow: none; }
+    }
+  </style>
+
+<style>
+.pv-nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(10,11,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,150,62,0.2);font-family:Inter,-apple-system,sans-serif;}
+.pv-nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:48px;gap:12px;}
+.pv-nav-btn,.pv-nav-home{color:#C8963E;text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all .2s;border:1px solid rgba(200,150,62,0.25);white-space:nowrap;}
+.pv-nav-btn:hover,.pv-nav-home:hover{background:rgba(200,150,62,0.12);border-color:rgba(200,150,62,0.5);}
+.pv-nav-disabled{color:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.08);cursor:default;}
+.pv-nav-info{color:rgba(255,255,255,0.5);font-size:12px;white-space:nowrap;text-align:center;}
+.pv-nav-home{font-family:'Playfair Display',Georgia,serif;font-size:14px;font-weight:600;margin-left:auto;}
+@media(max-width:600px){.pv-nav-inner{gap:6px;}.pv-nav-btn{font-size:11px;padding:4px 10px;}.pv-nav-home{display:none;}}
+</style>
+</head>
+<body>
+<nav class="pv-nav">
+  <div class="pv-nav-inner">
+    <span class="pv-nav-btn pv-nav-disabled">← Zurück</span>
+    <span class="pv-nav-info">Preview 1 / 6</span>
+    <a href="/impulspace/preview-2.html" class="pv-nav-btn">Weiter →</a>
+    <a href="/impulspace/" class="pv-nav-home" title="Zur Hauptseite">IMPULSPACE</a>
+  </div>
+</nav>
+
+
+  <!-- ============================================================
+       IDEA 1: FAKE LOGIN OVERLAY
+       ============================================================ -->
+  <div id="access-gate">
+    <div class="gate-scanlines"></div>
+    <div class="gate-noise"></div>
+
+    <div class="gate-container">
+      <div class="gate-emblem">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+
+      <p class="gate-system-line">SYS.ACCESS.RESTRICTED</p>
+      <p class="gate-system-line main">CLEARANCE LEVEL: SIGMA-4 REQUIRED</p>
+
+      <div class="gate-status" id="gate-status">AWAITING CREDENTIALS…</div>
+
+      <form id="gate-form">
+        <label class="gate-label" for="op-id">OPERATOR ID</label>
+        <input id="op-id" class="gate-input" type="text" autocomplete="off" spellcheck="false" placeholder="z.B. andrea.hornung" />
+
+        <label class="gate-label" for="auth-code">AUTH CODE</label>
+        <input id="auth-code" class="gate-input" type="password" autocomplete="off" placeholder="••••••••••••" />
+
+        <button type="submit" class="gate-btn">[ AUTHENTICATE ]</button>
+      </form>
+
+      <p class="gate-attempts" id="gate-attempts">3 ATTEMPT(S) REMAINING</p>
+    </div>
+
+    <button id="gate-bypass" class="gate-bypass">[ ESC ]</button>
+  </div>
+
+  <!-- ============================================================
+       IDEA 2: THREAT LEVEL BANNER
+       ============================================================ -->
+  <div id="threat-banner">
+    <div style="display:flex;align-items:center;">
+      <span class="threat-dot"></span>
+      <span>THREAT LEVEL: ELEVATED — Phishing-Kampagnen diese Woche +34%</span>
+    </div>
+    <span class="cyan-text" style="font-size:0.55rem;">// DEFCON 3</span>
+  </div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-brand">IMPULSPACE</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#classified">Classified</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#live-log">Live</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       IDEA 3: TERMINAL INTRO HERO
+       ============================================================ -->
+  <section id="hero">
+    <div class="container">
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+          </div>
+          <span class="terminal-title">visitor@impulspace:~ — zsh</span>
+        </div>
+        <div class="terminal-body" id="term-body">
+          <!-- Wird von JS befüllt -->
+        </div>
+      </div>
+
+      <div class="hero-cta-row" id="hero-ctas">
+        <a href="#portfolio" class="btn-cyber glitch-btn">Angebote entdecken</a>
+        <a href="#classified" class="btn-cyber cyan glitch-btn">Decrypt Profile</a>
+        <a href="#kontakt" class="btn-cyber glitch-btn">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ÜBER MICH (mit Glitch-Headline)
+       ============================================================ -->
+  <section id="about" class="section-pad">
+    <div class="container">
+      <p class="section-label">// 001 — About</p>
+      <h2 class="glitch-heading glitch-active" data-text="Expertise trifft Leidenschaft" style="margin-bottom:1rem;">
+        Expertise trifft Leidenschaft
+      </h2>
+      <div class="section-rule"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start;margin-top:2rem;">
+        <!-- Image with subtle frame -->
+        <div style="position:relative;">
+          <div style="border:1px solid var(--border-card);border-radius:6px;overflow:hidden;position:relative;">
+            <img src="/images/andrea-hornung.png" alt="Andrea Hornung" style="width:100%;display:block;" />
+            <!-- Corner accents -->
+            <div style="position:absolute;top:0;left:0;width:20px;height:20px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);opacity:0.6;"></div>
+            <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);opacity:0.6;"></div>
+          </div>
+          <p style="font-family:var(--font-heading);font-size:1.3rem;color:var(--gold);margin-top:0.75rem;">Andrea Hornung</p>
+          <p style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--text-muted);">GRÜNDERIN & CYBER-SECURITY-TRAINERIN</p>
+        </div>
+
+        <!-- Bio -->
+        <div>
+          <div style="background:var(--bg-card);border-left:2px solid var(--gold);padding:1.25rem 1.5rem;border-radius:0 4px 4px 0;margin-bottom:1.5rem;">
+            <p style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.5rem;">KURZPROFIL</p>
+            <p style="color:var(--text-secondary);line-height:1.7;font-size:0.95rem;">
+              Andrea Hornung ist Cyber-Security-Beraterin, Gründerin von IMPULSPACE und ehemalige Senior Managerin bei PwC Cybersecurity &amp; Privacy. Sie verbindet über zehn Jahre Fachexpertise mit der Fähigkeit, komplexe Sicherheitsthemen verständlich und inspirierend zu vermitteln.
+            </p>
+          </div>
+
+          <div style="color:var(--text-secondary);line-height:1.8;font-size:0.9rem;display:flex;flex-direction:column;gap:0.75rem;">
+            <p>Andrea verbindet <strong style="color:var(--text-primary);">tiefgreifende Expertise in Cybersicherheit</strong> mit einer Leidenschaft für Wissensvermittlung. Ihre akademischen Wurzeln liegen in der Informationswissenschaft und im Innovationsmanagement.</p>
+            <p>Nachdem Andrea in Manila Opfer eines raffinierten Cyberangriffs wurde, entschloss sie sich, gegen die wachsende Cyberkriminalität vorzugehen. Über <strong style="color:var(--text-primary);">sieben Jahre bei PwC</strong> — zuletzt als Senior Managerin — spezialisierte sie sich auf <strong style="color:var(--text-primary);">Cybersicherheit in M&amp;A-Transaktionen</strong>.</p>
+            <p>Als Innovationsmanagerin für Cybersicherheit &amp; Digitale Resilienz beim <strong style="color:var(--text-primary);">SIBB e.V.</strong> entwickelt sie Unterstützungsangebote für eine sichere Digitalisierung von KMU.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IDEA 5: ENCRYPTED / CLASSIFIED SECTION
+       ============================================================ -->
+  <section id="classified" class="section-pad">
+    <div class="container">
+      <div class="classified-section" id="classified-section">
+        <div class="classified-stamp" id="classified-stamp">CLASSIFIED</div>
+
+        <div class="decrypt-status" id="decrypt-status">
+          <span class="decrypt-dot" id="decrypt-dot"></span>
+          <span id="decrypt-label">DECRYPTING SECTOR 7G…</span>
+        </div>
+
+        <!-- Redacted headings -->
+        <h2 class="redacted-line" data-text="Vorträge & Keynotes" style="font-size:2rem;margin-bottom:1rem;display:block;">
+          Vorträge &amp; Keynotes
+          <span class="redact-bar"></span>
+        </h2>
+        <p class="scramble-text" data-final="Meine Impulsvorträge schaffen Bewusstsein für aktuelle Cyberbedrohungen, brechen eingefahrene Denkmuster auf und befähigen das Publikum, sich souveräner im digitalen Raum zu bewegen." style="margin-bottom:2.5rem;"></p>
+
+        <h3 class="redacted-line" data-text="Seminare & Kurse" style="font-size:1.5rem;margin-bottom:1rem;display:block;">
+          Seminare &amp; Kurse
+          <span class="redact-bar"></span>
+        </h3>
+        <p class="scramble-text" data-final="In meinen Seminaren werden komplexe Inhalte verständlich vermittelt. Zur Vertiefung eines Themenschwerpunkts konzipiere ich mehrteilige Kurse — online oder mit generierten Avataren, ganz nach Bedarf." style="margin-bottom:2.5rem;"></p>
+
+        <!-- Redacted Stats -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;">
+          <div class="redacted-line" data-text="7+ Jahre PwC" style="font-size:1.1rem;font-weight:700;display:block;text-align:center;padding:1.5rem;border:1px solid var(--border-subtle);border-radius:4px;">
+            7+ Jahre PwC
+            <span class="redact-bar"></span>
+          </div>
+          <div class="redacted-line" data-text="10+ Jahre Expertise" style="font-size:1.1rem;font-weight:700;display:block;text-align:center;padding:1.5rem;border:1px solid var(--border-subtle);border-radius:4px;">
+            10+ Jahre Expertise
+            <span class="redact-bar"></span>
+          </div>
+          <div class="redacted-line" data-text="M&A Cyber Security" style="font-size:1.1rem;font-weight:700;display:block;text-align:center;padding:1.5rem;border:1px solid var(--border-subtle);border-radius:4px;">
+            M&amp;A Cyber Security
+            <span class="redact-bar"></span>
+          </div>
+          <div class="redacted-line" data-text="KMU & Start-ups" style="font-size:1.1rem;font-weight:700;display:block;text-align:center;padding:1.5rem;border:1px solid var(--border-subtle);border-radius:4px;">
+            KMU &amp; Start-ups
+            <span class="redact-bar"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PORTFOLIO CARDS
+       ============================================================ -->
+  <section id="portfolio" class="section-pad">
+    <div class="container">
+      <p class="section-label">// 003 — Angebote</p>
+      <h2 class="glitch-heading glitch-active" data-text="Was ich für Sie tun kann" style="margin-bottom:1rem;">
+        Was ich für Sie tun kann
+      </h2>
+      <div class="section-rule"></div>
+
+      <div class="card-grid" style="margin-top:2rem;">
+        <!-- Vorträge -->
+        <div class="cyber-card">
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+            </svg>
+          </div>
+          <span class="card-tag gold">IMPULSE</span>
+          <h3 style="font-family:var(--font-heading);font-size:1.5rem;margin-bottom:0.75rem;">Vorträge</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+            Impulsvorträge, die Bewusstsein für aktuelle Cyberbedrohungen schaffen und Denkmuster aufbrechen — für ein souveränes Publikum im digitalen Raum.
+          </p>
+        </div>
+
+        <!-- Seminare -->
+        <div class="cyber-card gold-border">
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <span class="card-tag cyan">PACE</span>
+          <h3 style="font-family:var(--font-heading);font-size:1.5rem;margin-bottom:0.75rem;">Seminare</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+            Komplexe Inhalte verständlich vermittelt — mit Praxiseinblicken, Erfahrungsaustausch und nachhaltiger Wissensverankerung im richtigen Tempo.
+          </p>
+        </div>
+
+        <!-- Kurse -->
+        <div class="cyber-card">
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <span class="card-tag gold">SPACE</span>
+          <h3 style="font-family:var(--font-heading);font-size:1.5rem;margin-bottom:0.75rem;">Kurse</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+            Mehrteilige Kurse zur Vertiefung — online oder mit generierten Avataren. Der Raum, in dem nachhaltiges Lernen und echte Aha-Momente entstehen.
+          </p>
+        </div>
+      </div>
+
+      <!-- Vortragsthemen -->
+      <div style="margin-top:3rem;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:6px;padding:2rem;">
+        <h3 style="font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.15em;color:var(--cyan);margin-bottom:1.5rem;">// VORTRAGSTHEMEN</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0.75rem;">
+          <div style="padding:1rem;border:1px solid var(--border-subtle);border-radius:4px;display:flex;align-items:center;gap:0.75rem;">
+            <span style="color:var(--gold);font-family:var(--font-mono);font-size:0.8rem;">01</span>
+            <span style="color:var(--text-secondary);font-size:0.9rem;">Social Engineering — Der Mensch als Schwachstelle</span>
+          </div>
+          <div style="padding:1rem;border:1px solid var(--border-subtle);border-radius:4px;display:flex;align-items:center;gap:0.75rem;">
+            <span style="color:var(--cyan);font-family:var(--font-mono);font-size:0.8rem;">02</span>
+            <span style="color:var(--text-secondary);font-size:0.9rem;">Ransomware &amp; Cyber-Erpressung</span>
+          </div>
+          <div style="padding:1rem;border:1px solid var(--border-subtle);border-radius:4px;display:flex;align-items:center;gap:0.75rem;">
+            <span style="color:var(--gold);font-family:var(--font-mono);font-size:0.8rem;">03</span>
+            <span style="color:var(--text-secondary);font-size:0.9rem;">Cyber Security in M&amp;A — Risiken im Deal Lifecycle</span>
+          </div>
+          <div style="padding:1rem;border:1px solid var(--border-subtle);border-radius:4px;display:flex;align-items:center;gap:0.75rem;">
+            <span style="color:var(--cyan);font-family:var(--font-mono);font-size:0.8rem;">04</span>
+            <span style="color:var(--text-secondary);font-size:0.9rem;">KI &amp; Deepfakes — Neue Bedrohungen</span>
+          </div>
+          <div style="padding:1rem;border:1px solid var(--border-subtle);border-radius:4px;display:flex;align-items:center;gap:0.75rem;grid-column:1/-1;">
+            <span style="color:var(--gold);font-family:var(--font-mono);font-size:0.8rem;">05</span>
+            <span style="color:var(--text-secondary);font-size:0.9rem;">Cyber-Resilienz für Führungskräfte — Vom reaktiven zum proaktiven Sicherheitsdenken</span>
+          </div>
+        </div>
+        <p style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);text-align:center;margin-top:1rem;">
+          Alle Themen werden individuell auf Branche, Zielgruppe und Zeitrahmen abgestimmt.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IDEA 6: LIVE SECURITY LOG
+       ============================================================ -->
+  <section id="live-log" class="section-pad">
+    <div class="container">
+      <p class="section-label">// 004 — Live Monitor</p>
+      <h2 style="font-family:var(--font-heading);font-size:2.5rem;font-weight:700;margin-bottom:1rem;">
+        Security Operations <span class="cyan-text cyan-glow">Live</span>
+      </h2>
+      <div class="section-rule"></div>
+
+      <div class="live-log-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+          </div>
+          <span class="terminal-title">impulspace-siem:~ tail -f /var/log/security.log</span>
+        </div>
+        <div class="live-log-body" id="live-log-body">
+          <!-- Wird von JS befüllt -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       KONTAKT & FOOTER (mit Easter Egg)
+       ============================================================ -->
+  <footer id="kontakt" class="site-footer">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold);">// 005 — Kontakt</p>
+      <h2 style="font-family:var(--font-heading);font-size:2.5rem;font-weight:700;margin-bottom:1rem;">Lassen Sie uns sprechen</h2>
+      <div class="section-rule" style="margin:1.5rem auto 2rem;"></div>
+
+      <p style="color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;line-height:1.7;">
+        Sie interessieren sich für einen Vortrag, ein Seminar oder eine individuelle Beratung?<br/>
+        Schreiben Sie mir — ich freue mich auf den Austausch.
+      </p>
+
+      <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+        <a href="mailto:andrea.hornung@impulspace.de" class="btn-cyber">E-Mail</a>
+        <a href="#" class="btn-cyber cyan">LinkedIn</a>
+      </div>
+
+      <!-- Copyright -->
+      <div style="border-top:1px solid var(--border-subtle);padding-top:2rem;margin-top:2rem;">
+        <p style="font-size:0.8rem;color:var(--text-muted);">&copy; 2026 IMPULSPACE — Andrea Hornung. Alle Rechte vorbehalten.</p>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">
+          <a href="#" style="color:var(--text-muted);text-decoration:none;">Impressum</a>
+          &nbsp;&middot;&nbsp;
+          <a href="#" style="color:var(--text-muted);text-decoration:none;">Datenschutz</a>
+        </p>
+
+        <!-- IDEA 7: EASTER EGG -->
+        <span class="footer-easter-egg" id="easter-egg-trigger" title="Admin Access">■</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Easter Egg Modal -->
+  <div class="easter-egg-modal" id="easter-egg-modal">
+    <div class="easter-egg-content">
+      <div class="ee-title">> ACCESS DENIED</div>
+      <div class="ee-body">
+        Just kidding. You've been successfully <strong>social-engineered</strong>.<br/><br/>
+        Das ist genau das, wovor ich meine Kunden warne.<br/>
+        Ein einziger unbedachter Klick — und schon bist du drin.
+      </div>
+      <div class="ee-punchline">
+        &raquo; Neugier ist der beste Angriffsvektor. &laquo;<br/>
+        <span style="font-size:0.7rem;color:var(--text-muted);">— Andrea Hornung</span>
+      </div>
+      <button class="btn-cyber" style="margin-top:1.5rem;" onclick="document.getElementById('easter-egg-modal').classList.remove('open')">
+        [ CLOSE WINDOW ]
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script>
+  (function() {
+    /* ============================================================
+       GATE: Fake Login Overlay
+       ============================================================ */
+    const gate = document.getElementById('access-gate');
+    const gateForm = document.getElementById('gate-form');
+    const gateStatus = document.getElementById('gate-status');
+    const gateAttempts = document.getElementById('gate-attempts');
+    const gateBypass = document.getElementById('gate-bypass');
+
+    // Skip if already passed this session
+    if (sessionStorage.getItem('impulspace_gate_passed')) {
+      gate.style.display = 'none';
+      revealSite();
+    }
+
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    function revealSite() {
+      sessionStorage.setItem('impulspace_gate_passed', '1');
+      gate.classList.add('exit-anim');
+      setTimeout(() => {
+        gate.style.display = 'none';
+      }, 750);
+
+      // Show nav + threat banner
+      setTimeout(() => {
+        document.getElementById('main-nav').classList.add('visible');
+        document.getElementById('threat-banner').classList.add('visible');
+        // Start terminal animation
+        playTerminal();
+        // Start live log
+        playLiveLog();
+      }, 400);
+    }
+
+    gateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      attempts++;
+      const remaining = maxAttempts - attempts;
+
+      if (attempts >= maxAttempts) {
+        // Glitch moment
+        gate.style.transition = 'filter 0.15s';
+        gate.style.filter = 'hue-rotate(90deg) saturate(1.5)';
+        setTimeout(() => {
+          gate.style.filter = '';
+          gateStatus.textContent = 'BREACH DETECTED // SOCIAL ENGINEERING VECTOR CONFIRMED';
+          gateStatus.style.color = 'var(--terminal-red)';
+          gateAttempts.textContent = 'LESSON: You persisted. That instinct is the vulnerability.';
+          gateAttempts.style.color = 'var(--terminal-amber)';
+
+          // Replace form with reveal text
+          gateForm.innerHTML = `
+            <div class="gate-reveal-text">
+              <p>Das hier war eine <strong style="color:#fff;">Social-Engineering-Demonstration</strong>.</p>
+              <p>Du hast dreimal versucht, dich an einem System anzumelden, für das du keine Zugangsdaten hast — und du hast nicht aufgehört.</p>
+              <p><strong style="color:#fff;">Genau diesen Reflex nutzen Angreifer aus.</strong></p>
+              <p style="font-size:0.7rem;color:var(--text-muted);">Willkommen bei IMPULSPACE. Schön, dass du neugierig bist. Bleib wachsam.</p>
+            </div>
+            <button type="button" class="gate-btn" id="enter-site" style="margin-top:0.5rem;">[ ENTER SITE ]</button>
+          `;
+          document.getElementById('enter-site').addEventListener('click', revealSite);
+        }, 200);
+
+      } else {
+        gate.classList.add('gate-shake');
+        setTimeout(() => gate.classList.remove('gate-shake'), 400);
+        gateStatus.textContent = 'AUTH FAILURE // INVALID CREDENTIALS';
+        gateStatus.style.color = 'var(--terminal-red)';
+        gateAttempts.textContent = `${remaining} ATTEMPT(S) REMAINING`;
+        gateAttempts.style.color = remaining === 1 ? 'var(--terminal-amber)' : '#4a7a5a';
+        if (remaining === 1) {
+          gate.style.boxShadow = 'inset 0 0 80px rgba(255,170,0,0.12)';
+        }
+        gateForm.reset();
+        document.getElementById('op-id').focus();
+      }
+    });
+
+    // Bypass
+    gateBypass.addEventListener('click', revealSite);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && gate.style.display !== 'none') revealSite();
+    });
+
+    /* ============================================================
+       TERMINAL INTRO (IDEA 3)
+       ============================================================ */
+    const termBody = document.getElementById('term-body');
+    const speed = 28;
+    const jitter = () => speed + (Math.random() - 0.5) * 18;
+
+    function pause(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function el(tag, cls, html = '') {
+      const e = document.createElement(tag);
+      e.className = cls;
+      if (html) e.innerHTML = html;
+      return e;
+    }
+
+    async function typeInto(elem, text) {
+      for (const char of text) {
+        elem.textContent += char;
+        await pause(jitter());
+      }
+    }
+
+    async function runCmd(fullLine, outputLines = []) {
+      const line = el('div', 'term-line visible');
+      termBody.appendChild(line);
+
+      const promptSpan = el('span', 'term-prompt', '❯ ');
+      line.appendChild(promptSpan);
+
+      const cmdSpan = el('span', 'term-cmd');
+      line.appendChild(cmdSpan);
+
+      await typeInto(cmdSpan, fullLine);
+      await pause(350);
+
+      for (const out of outputLines) {
+        const outLine = el('div', 'term-line visible');
+        let cls = 'term-out';
+        if (out.startsWith('[ok]')) cls = 'term-success';
+        if (out.startsWith('[!]')) cls = 'term-highlight';
+        outLine.innerHTML = `<span class="${cls}">${out}</span>`;
+        termBody.appendChild(outLine);
+        await pause(200);
+      }
+      termBody.scrollTop = termBody.scrollHeight;
+    }
+
+    async function playTerminal() {
+      await pause(500);
+
+      await runCmd('whoami', ['andrea.hornung@impulspace']);
+      await pause(700);
+
+      await runCmd('cat ~/welcome.txt', [
+        '╔══════════════════════════════════════════╗',
+        '║  IMPULSE FÜR EINE SICHERE DIGITALE ZUKUNFT ║',
+        '╚══════════════════════════════════════════╝',
+      ]);
+      await pause(500);
+
+      await runCmd('cat ~/mission.txt', [
+        '[!] Menschen & Organisationen befähigen,',
+        '[!] Cyberrisiken zu erkennen und souverän',
+        '[!] im digitalen Raum zu handeln.',
+      ]);
+      await pause(600);
+
+      await runCmd('ls -la ~/angebote/', [
+        'drwxr-xr-x  vortraege/',
+        'drwxr-xr-x  seminare/',
+        'drwxr-xr-x  kurse/',
+        'drwxr-xr-x  keynote-speaking/',
+        'drwxr-xr-x  workshops/',
+      ]);
+      await pause(600);
+
+      await runCmd('head -3 ~/referenzen.log', [
+        '[ok] PwC Risk & Reg Summerbeats 2025 — "Distributed Denial of Truth"',
+        '[ok] 7+ Jahre PwC Cybersecurity & Privacy — Senior Managerin',
+        '[ok] SIBB e.V. — Innovationsmanagerin Cybersicherheit',
+      ]);
+      await pause(500);
+
+      // Final prompt with blinking cursor
+      const finalLine = el('div', 'term-line visible');
+      finalLine.innerHTML = '<span class="term-prompt">❯ </span><span class="term-cursor"></span>';
+      termBody.appendChild(finalLine);
+      termBody.scrollTop = termBody.scrollHeight;
+    }
+
+    /* ============================================================
+       ENCRYPTED SECTION (IDEA 5)
+       ============================================================ */
+    const classifiedSection = document.getElementById('classified-section');
+
+    function scrambleText(element, finalText) {
+      const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~0123456789';
+      let resolved = new Array(finalText.length).fill(false);
+
+      element.innerHTML = finalText.split('').map((_, i) =>
+        `<span class="scramble-char" data-idx="${i}">${chars[Math.floor(Math.random() * chars.length)]}</span>`
+      ).join('');
+
+      const spans = element.querySelectorAll('.scramble-char');
+      let resolveCount = 0;
+
+      const interval = setInterval(() => {
+        const resolveSpeed = Math.max(1, Math.floor((finalText.length - resolveCount) / 8));
+        let resolvedThisTick = 0;
+
+        for (let attempt = 0; attempt < resolveSpeed; attempt++) {
+          const unresolved = [];
+          for (let i = 0; i < finalText.length; i++) {
+            if (!resolved[i]) unresolved.push(i);
+          }
+          if (unresolved.length === 0) break;
+
+          const idx = unresolved[Math.floor(Math.random() * unresolved.length)];
+          resolved[idx] = true;
+          resolvedThisTick++;
+          spans[idx].textContent = finalText[idx];
+          spans[idx].classList.add('char-resolved');
+        }
+
+        resolveCount += resolvedThisTick;
+
+        for (let i = 0; i < finalText.length; i++) {
+          if (!resolved[i]) {
+            spans[i].textContent = chars[Math.floor(Math.random() * chars.length)];
+          }
+        }
+
+        if (resolveCount >= finalText.length) {
+          clearInterval(interval);
+        }
+      }, 35);
+    }
+
+    function revealClassified() {
+      // Reveal redacted bars
+      const bars = classifiedSection.querySelectorAll('.redact-bar');
+      bars.forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('revealed'), i * 150);
+      });
+
+      // Scramble decrypt
+      const scrambles = classifiedSection.querySelectorAll('.scramble-text');
+      scrambles.forEach((el, i) => {
+        const ft = el.dataset.final;
+        if (!ft) return;
+        setTimeout(() => scrambleText(el, ft), i * 700 + 300);
+      });
+
+      // Fade stamp
+      setTimeout(() => {
+        document.getElementById('classified-stamp')?.classList.add('faded');
+      }, 200);
+
+      // Update status
+      setTimeout(() => {
+        document.getElementById('decrypt-dot')?.classList.add('done');
+        document.getElementById('decrypt-label').textContent = 'DECRYPTION COMPLETE // SECTOR CLEAR';
+      }, 2500);
+    }
+
+    const classifiedObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          revealClassified();
+          classifiedObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    classifiedObserver.observe(classifiedSection);
+
+    /* ============================================================
+       LIVE LOG (IDEA 6)
+       ============================================================ */
+    const logBody = document.getElementById('live-log-body');
+
+    const logEntries = [
+      { ts: '22:03:14.221', type: 'info',  msg: 'Firewall-Regel #2841 aktualisiert — Port 443 Whitelist bestätigt' },
+      { ts: '22:03:15.004', type: 'ok',    msg: 'SSL-Zertifikat impulspace.de — Gültig bis 2027-03-12 (TLS 1.3)' },
+      { ts: '22:03:16.887', type: 'info',  msg: 'IDS/IPS-Signatur-Update: 12 neue Threat-Signaturen geladen' },
+      { ts: '22:03:17.332', type: 'warn',  msg: 'Anomalie erkannt: Ungewöhnlicher Traffic auf Port 3389 (RDP) von 185.220.x.x — geblockt' },
+      { ts: '22:03:18.104', type: 'ok',    msg: 'Fail2Ban: IP 185.220.101.34 für 3600s gesperrt (3 Fehlversuche SSH)' },
+      { ts: '22:03:19.550', type: 'info',  msg: 'Backup-Job nightly-snapshot: Laufwerk /data — 2.4TB gesichert' },
+      { ts: '22:03:20.091', type: 'alert', msg: 'KRITISCH: Phishing-Kampagne "Fake Invoice Q3" an 3 MA zugestellt — sofort isoliert' },
+      { ts: '22:03:20.882', type: 'ok',    msg: 'Microsoft Defender: Bedrohung "Phish:HTML/Invoice.A!ml" unter Quarantäne' },
+      { ts: '22:03:21.445', type: 'info',  msg: 'SIEM-Korrelation: Phishing-Kampagne mit APT29-TTPs assoziiert (low confidence)' },
+      { ts: '22:03:22.103', type: 'ok',    msg: 'Awareness-Schulung "Social Engineering" für Team Sales automatisch terminiert' },
+      { ts: '22:03:23.776', type: 'info',  msg: 'VPN-Endpunkt Berlin — 42 aktive Sessions, Throughput 1.8 Gbps' },
+      { ts: '22:03:24.339', type: 'warn',  msg: 'Veraltetes WordPress-Plugin auf partnerblog.de erkannt — Benachrichtigung versendet' },
+      { ts: '22:03:25.001', type: 'info',  msg: 'System-Healthcheck: Alle 14 Services operational (CPU 23%, RAM 41%, IOPS normal)' },
+      { ts: '22:03:26.412', type: 'ok',    msg: 'MFA-Usage-Report: 98.7% der Accounts mit 2FA geschützt (+2.1% zum Vormonat)' },
+      { ts: '22:03:27.055', type: 'info',  msg: 'Threat-Intel-Feed: Neue IoCs für Snake Keylogger geladen (Hash: a3f7…)' },
+    ];
+
+    let logIndex = 0;
+    function addLogLine() {
+      if (logIndex >= logEntries.length) {
+        // Loop back with new timestamps
+        logIndex = 0;
+      }
+      const entry = logEntries[logIndex];
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="log-ts">[${entry.ts}]</span><span class="log-${entry.type}">${entry.msg}</span>`;
+      logBody.appendChild(line);
+
+      // Keep only last 20 lines
+      while (logBody.children.length > 20) {
+        logBody.removeChild(logBody.firstChild);
+      }
+      logBody.scrollTop = logBody.scrollHeight;
+      logIndex++;
+    }
+
+    function playLiveLog() {
+      // Initial batch
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => addLogLine(), i * 180);
+      }
+      // Continuous feed
+      setInterval(addLogLine, 2200);
+    }
+
+    /* ============================================================
+       EASTER EGG (IDEA 7)
+       ============================================================ */
+    document.getElementById('easter-egg-trigger').addEventListener('click', () => {
+      document.getElementById('easter-egg-modal').classList.add('open');
+    });
+    document.getElementById('easter-egg-modal').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('open');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('easter-egg-modal').classList.remove('open');
+      }
+    });
+
+    // If gate was already passed, show everything immediately
+    if (sessionStorage.getItem('impulspace_gate_passed')) {
+      revealSite();
+    }
+  })();
+  </script>
+
+</body>
+</html>
