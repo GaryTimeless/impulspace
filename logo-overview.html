@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPULSPACE - Logo Entwürfe Übersicht</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0F17;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --gold: #D4AF37;
+            --gold-hover: #F3C747;
+            --accent: #38BDF8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        header {
+            max-width: 1400px;
+            margin: 0 auto 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .title-group h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFF, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-group p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .bg-toggle-group {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.25rem;
+            border-radius: 999px;
+            border: 1px solid var(--card-border);
+        }
+
+        .bg-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bg-btn.active {
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--gold);
+        }
+
+        .format-badge {
+            font-size: 0.75rem;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-weight: 600;
+        }
+
+        .preview-box {
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        /* Background themes for preview box */
+        .preview-box.bg-dark {
+            background-color: #0F172A;
+        }
+        .preview-box.bg-light {
+            background-color: #F8FAFC;
+        }
+        .preview-box.bg-check {
+            background-color: #1E293B;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+        .preview-box.bg-teal {
+            background: linear-gradient(135deg, #0F2027, #203A43, #2C5364);
+        }
+
+        .preview-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .preview-box img {
+            transform: scale(1.03);
+        }
+
+        .actions {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-top: 1px solid var(--card-border);
+            margin-top: auto;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.55rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-svg {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .btn-svg:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+
+        .btn-png {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            border-color: var(--card-border);
+        }
+        .btn-png:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-full {
+            grid-column: 1 / -1;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+        .btn-full:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        footer {
+            max-width: 1400px;
+            margin: 4rem auto 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="title-group">
+            <h1>IMPULSPACE Logo Katalog</h1>
+            <p>15 Logo-Entwürfe aus PDF extrahiert &bull; SVG Vektordateien & High-Res PNGs</p>
+        </div>
+
+        <div class="controls">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Vorschau-Hintergrund:</span>
+            <div class="bg-toggle-group">
+                <button class="bg-btn active" onclick="setBg('bg-dark', this)">Dunkel</button>
+                <button class="bg-btn" onclick="setBg('bg-light', this)">Hell</button>
+                <button class="bg-btn" onclick="setBg('bg-check', this)">Transparent</button>
+                <button class="bg-btn" onclick="setBg('bg-teal', this)">Brand Gradient</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="grid" id="logoGrid">
+        <!-- Generated dynamically via JS -->
+    </div>
+
+    <footer>
+        <p>&copy; 2026 IMPULSPACE &bull; Alle Vektor (SVG) und Raster (PNG 300 DPI) Dateien befinden sich in <code>public/logos/</code></p>
+    </footer>
+
+    <script>
+        const logos = Array.from({length: 15}, (_, i) => {
+            const num = (i + 1).toString().padStart(2, '0');
+            return {
+                id: `logo-${num}`,
+                title: `Entwurf ${num}`,
+                svg: `logos/svg/logo-${num}.svg`,
+                pngTrans: `logos/png-transparent/logo-${num}.png`,
+                pngWhite: `logos/png-white/logo-${num}.png`,
+                pngDark: `logos/png-dark/logo-${num}.png`,
+                fullSvg: `logos/full-page/logo-${num}-full.svg`,
+                fullPng: `logos/full-page/logo-${num}-full.png`
+            };
+        });
+
+        const grid = document.getElementById('logoGrid');
+
+        logos.forEach(logo => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="card-title">${logo.title}</span>
+                    <span class="format-badge">SVG + PNG</span>
+                </div>
+                <div class="preview-box bg-dark" id="preview-${logo.id}">
+                    <img src="${logo.svg}" alt="${logo.title} Vektor Logo" loading="lazy">
+                </div>
+                <div class="actions">
+                    <div class="btn-row">
+                        <a href="${logo.svg}" download="${logo.id}.svg" class="btn btn-svg">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            SVG (Vektor)
+                        </a>
+                        <a href="${logo.pngTrans}" download="${logo.id}-transparent.png" class="btn btn-png">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            PNG (Transp)
+                        </a>
+                    </div>
+                    <div class="btn-row">
+                        <a href="${logo.pngWhite}" download="${logo.id}-white.png" class="btn btn-png">
+                            PNG (Weiss)
+                        </a>
+                        <a href="${logo.pngDark}" download="${logo.id}-dark.png" class="btn btn-png">
+                            PNG (Dunkel)
+                        </a>
+                    </div>
+                    <a href="${logo.fullPng}" target="_blank" class="btn btn-full">
+                        Original Entwurf (Ganze Seite PDF)
+                    </a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function setBg(bgClass, btn) {
+            document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.preview-box').forEach(box => {
+                box.className = `preview-box ${bgClass}`;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Danke — IMPULSPACE</title>
+<style>
+  @font-face { font-family: 'Syne'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/syne-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Syne'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/syne-latin-500-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Syne'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/syne-latin-600-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Syne'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/syne-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Fira Code'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/fira-code-latin-400-normal.woff2') format('woff2'); }
+
+  :root {
+    --bg: #000000;
+    --bg-card: #0a0a0a;
+    --gold: #C8963E;
+    --gold-hover: #D4A854;
+    --pace: #c45060;
+    --text-primary: #e8e8ed;
+    --text-secondary: #8aa89b;
+    --text-muted: #5a6070;
+    --border: rgba(255,255,255,.07);
+    --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fira Code', 'JetBrains Mono', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .checkmark {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.5rem;
+    background: rgba(200,150,62,.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checkmark svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--gold);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--gold);
+    color: #000;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color .2s;
+  }
+
+  .btn:hover {
+    background: var(--gold-hover);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="section-label">// TRANSMISSION COMPLETE</div>
+  <div class="checkmark">
+    <svg viewBox="0 0 24 24">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+  <h1>Vielen Dank!</h1>
+  <p>Ihre Nachricht wurde gesendet. Ich melde mich so bald wie möglich bei Ihnen.</p>
+  <a href="/" class="btn">Zurück zur Website</a>
+</div>
+</body>
+</html>
