@@ -1,0 +1,12 @@
+# GitLab Pages Configuration for IMPULSPACE Website
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp -r * .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
